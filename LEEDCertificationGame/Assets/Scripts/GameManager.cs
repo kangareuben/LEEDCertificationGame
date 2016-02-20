@@ -33,9 +33,37 @@ public class GameManager : MonoBehaviour {
 	public GameObject landscapingText;
 	public GameObject windTurbineText;
 
+	public GameObject building1Text;
+	public GameObject building2Text;
+	public GameObject building3Text;
+
+	int bikeRackValue = 1;
+	int ventilationValue = 8;
+	int wasteManagementValue = 3;
+	int appliancesValue = 3;
+	int insulationValue = 3;
+	int lightingValue = 3;
+	int windowsValue = 3;
+	int geothermalValue = 5;
+	int showerValue = 0;
+	int solarPanelValue = 3;
+	int drainageValue = 6;
+	int irrigationValue = 4;
+	int landscapingValue = 7;
+	int windTurbineValue = 3;
+
 	// Use this for initialization
 	void Start () {
-	
+		ventilationValue = Random.Range(1, ventilationValue + 1);
+		wasteManagementValue = Random.Range(1, wasteManagementValue + 1);
+		appliancesValue = Random.Range(1, appliancesValue + 1);
+		insulationValue = Random.Range(1, insulationValue + 1);
+		lightingValue = Random.Range(1, lightingValue + 1);
+		windowsValue = Random.Range(1, windowsValue + 1);
+		geothermalValue = Random.Range(1, geothermalValue + 1);
+		drainageValue = Random.Range(1, drainageValue + 1);
+		irrigationValue = Random.Range(1, irrigationValue + 1);
+		landscapingValue = Random.Range(1, landscapingValue + 1);
 	}
 	
 	// Update is called once per frame
