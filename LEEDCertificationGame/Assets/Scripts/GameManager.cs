@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour {
-
+public class GameManager : MonoBehaviour
+{
 	public List<GameObject> iconPrefabs = new List<GameObject>();
 
 	public List<GameObject> iconTexts = new List<GameObject>();

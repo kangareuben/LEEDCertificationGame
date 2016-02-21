@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Draggable : MonoBehaviour {
-
+public class Draggable : MonoBehaviour
+{
 	bool decrementedText = false;
 	GameManager gm;
 	int index;
