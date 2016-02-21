@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour {
 
 	public List<GameObject> buildingTexts = new List<GameObject>();
 
+	public GameObject winText;
+
 	List<int> iconValues = new List<int>();
 	int bikeRackValue = 1;
 	int ventilationValue = 8;
@@ -67,14 +69,84 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-	
+		CheckForWin();
+	}
+
+	void CheckForWin()
+	{
+		int num0;
+		int num1;
+		int num2;
+		
+		if(buildingTexts[0].GetComponent<Text>().text.Substring(buildingTexts[0].GetComponent<Text>().text.Length - 2, 1) == " ")
+		{
+			num0 = int.Parse(buildingTexts[0].GetComponent<Text>().text.Substring(buildingTexts[0].GetComponent<Text>().text.Length - 1));
+		}
+		else
+		{
+			num0 = int.Parse(buildingTexts[0].GetComponent<Text>().text.Substring(buildingTexts[0].GetComponent<Text>().text.Length - 2, 2));
+		}
+
+		if(buildingTexts[1].GetComponent<Text>().text.Substring(buildingTexts[1].GetComponent<Text>().text.Length - 2, 1) == " ")
+		{
+			num1 = int.Parse(buildingTexts[1].GetComponent<Text>().text.Substring(buildingTexts[1].GetComponent<Text>().text.Length - 1));
+		}
+		else
+		{
+			num1 = int.Parse(buildingTexts[1].GetComponent<Text>().text.Substring(buildingTexts[1].GetComponent<Text>().text.Length - 2, 2));
+		}
+
+		if(buildingTexts[2].GetComponent<Text>().text.Substring(buildingTexts[2].GetComponent<Text>().text.Length - 2, 1) == " ")
+		{
+			num2 = int.Parse(buildingTexts[2].GetComponent<Text>().text.Substring(buildingTexts[2].GetComponent<Text>().text.Length - 1));
+		}
+		else
+		{
+			num2 = int.Parse(buildingTexts[2].GetComponent<Text>().text.Substring(buildingTexts[2].GetComponent<Text>().text.Length - 2, 2));
+		}
+
+		if(num0 >= 36 && num1 >= 36 && num2 >= 20)
+		{
+			winText.GetComponent<Text>().enabled = true;
+		}
+		else
+		{
+			winText.GetComponent<Text>().enabled = false;
+		}
+
+		if(num0 >= 36)
+		{
+			buildingTexts[0].GetComponent<Text>().color = Color.green;
+		}
+		else
+		{
+			buildingTexts[0].GetComponent<Text>().color = Color.white;
+		}
+
+		if(num1 >= 36)
+		{
+			buildingTexts[1].GetComponent<Text>().color = Color.green;
+		}
+		else
+		{
+			buildingTexts[1].GetComponent<Text>().color = Color.white;
+		}
+
+		if(num2 >= 20)
+		{
+			buildingTexts[2].GetComponent<Text>().color = Color.green;
+		}
+		else
+		{
+			buildingTexts[2].GetComponent<Text>().color = Color.white;
+		}
 	}
 
 	void CreatePuzzle()
 	{
 		int totalPoints = 0;
 
-		for(int i = 0; i < 30; i++)
+		for(int i = 0; i < 40; i++)
 		{
 			int index = Random.Range(0, iconPrefabs.Count);
 
