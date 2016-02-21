@@ -29,9 +29,16 @@ public class GameManager : MonoBehaviour
 	int landscapingValue = 7;
 	int windTurbineValue = 3;
 
+	bool iconsDraggable = true;
+
 	public List<int> IconValues
 	{
 		get{return iconValues;}
+	}
+
+	public bool IconsDraggable
+	{
+		get{return iconsDraggable;}
 	}
 
 	// Use this for initialization
@@ -69,7 +76,9 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		CheckForWin();
+		if(iconsDraggable){
+			CheckForWin();
+		}
 	}
 
 	void CheckForWin()
@@ -107,11 +116,7 @@ public class GameManager : MonoBehaviour
 
 		if(num0 >= 36 && num1 >= 36 && num2 >= 20)
 		{
-			winText.GetComponent<Text>().enabled = true;
-		}
-		else
-		{
-			winText.GetComponent<Text>().enabled = false;
+			StartCoroutine("EndLevel");
 		}
 
 		if(num0 >= 36)
@@ -154,6 +159,7 @@ public class GameManager : MonoBehaviour
 			g.AddComponent<Draggable>();
 			g.GetComponent<Draggable>().Index = index;
 			g.AddComponent<BoxCollider2D>();
+			g.tag = "Draggable";
 
 			IncrementOrDecrementText(index, 1);
 
@@ -161,6 +167,14 @@ public class GameManager : MonoBehaviour
 		}
 
 		Debug.Log(totalPoints);
+	}
+
+	IEnumerator EndLevel()
+	{
+		winText.GetComponent<Text>().enabled = true;
+		iconsDraggable = false;
+		yield return new WaitForSeconds(3);
+		RestartPuzzle();
 	}
 
 	public void IncrementOrDecrementText(int index, int value)
@@ -189,5 +203,10 @@ public class GameManager : MonoBehaviour
 
 		num += value;
 		buildingTexts[index].GetComponent<Text>().text = s + num.ToString();
+	}
+
+	void RestartPuzzle()
+	{
+		Application.LoadLevel(Application.loadedLevel);
 	}
 }

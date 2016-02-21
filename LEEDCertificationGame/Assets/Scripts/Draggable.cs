@@ -28,20 +28,23 @@ public class Draggable : MonoBehaviour
 
 	void OnMouseDrag()
 	{
-		float distance_to_screen = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-		Vector3 pos_move = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));
-		transform.position = new Vector3(pos_move.x, pos_move.y, transform.position.z);
+		if(gm.IconsDraggable)
+			{
+			float distance_to_screen = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+			Vector3 pos_move = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));
+			transform.position = new Vector3(pos_move.x, pos_move.y, transform.position.z);
 
-		if(!decrementedText)
-		{
-			decrementedText = true;
-			gm.IncrementOrDecrementText(index, -1);
-		}
+			if(!decrementedText)
+			{
+				decrementedText = true;
+				gm.IncrementOrDecrementText(index, -1);
+			}
 
-		if(onBuildingNumber != -1)
-		{
-			gm.IncrementOrDecrementBuildingText(onBuildingNumber, -gm.IconValues[index]);
-			onBuildingNumber = -1;
+			if(onBuildingNumber != -1)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -gm.IconValues[index]);
+				onBuildingNumber = -1;
+			}
 		}
 	}
 
