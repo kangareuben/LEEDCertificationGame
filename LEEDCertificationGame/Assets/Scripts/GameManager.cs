@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
 	{
 		int totalPoints = 0;
 
-		for(int i = 0; i < 40; i++)
+		while(totalPoints < 93)
 		{
 			int index = Random.Range(0, iconPrefabs.Count);
 
