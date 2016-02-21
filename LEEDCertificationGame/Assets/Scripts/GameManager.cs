@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour {
 	int landscapingValue = 7;
 	int windTurbineValue = 3;
 
+	public List<int> IconValues
+	{
+		get{return iconValues;}
+	}
+
 	// Use this for initialization
 	void Start()
 	{
@@ -36,7 +41,7 @@ public class GameManager : MonoBehaviour {
 		insulationValue = Random.Range(1, insulationValue + 1);
 		lightingValue = Random.Range(1, lightingValue + 1);
 		windowsValue = Random.Range(1, windowsValue + 1);
-		geothermalValue = Random.Range(1, geothermalValue + 1);
+		geothermalValue = Random.Range(3, geothermalValue + 1);
 		drainageValue = Random.Range(1, drainageValue + 1);
 		irrigationValue = Random.Range(1, irrigationValue + 1);
 		landscapingValue = Random.Range(1, landscapingValue + 1);
@@ -92,5 +97,25 @@ public class GameManager : MonoBehaviour {
 		int num = int.Parse(iconTexts[index].GetComponent<Text>().text.Substring(iconTexts[index].GetComponent<Text>().text.Length - 1));
 		num += value;
 		iconTexts[index].GetComponent<Text>().text = s + num.ToString();
+	}
+
+	public void IncrementOrDecrementBuildingText(int index, int value)
+	{
+		string s;
+		int num;
+
+		if(buildingTexts[index].GetComponent<Text>().text.Substring(buildingTexts[index].GetComponent<Text>().text.Length - 2, 1) == " ")
+		{
+			s = buildingTexts[index].GetComponent<Text>().text.Substring(0, buildingTexts[index].GetComponent<Text>().text.Length - 1);
+			num = int.Parse(buildingTexts[index].GetComponent<Text>().text.Substring(buildingTexts[index].GetComponent<Text>().text.Length - 1));
+		}
+		else
+		{
+			s = buildingTexts[index].GetComponent<Text>().text.Substring(0, buildingTexts[index].GetComponent<Text>().text.Length - 2);
+			num = int.Parse(buildingTexts[index].GetComponent<Text>().text.Substring(buildingTexts[index].GetComponent<Text>().text.Length - 2, 2));
+		}
+
+		num += value;
+		buildingTexts[index].GetComponent<Text>().text = s + num.ToString();
 	}
 }

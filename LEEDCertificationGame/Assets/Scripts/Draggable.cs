@@ -6,6 +6,7 @@ public class Draggable : MonoBehaviour {
 	bool decrementedText = false;
 	GameManager gm;
 	int index;
+	int onBuildingNumber = -1;
 
 	public int Index
 	{
@@ -36,10 +37,48 @@ public class Draggable : MonoBehaviour {
 			decrementedText = true;
 			gm.IncrementOrDecrementText(index, -1);
 		}
+
+		if(onBuildingNumber != -1)
+		{
+			gm.IncrementOrDecrementBuildingText(onBuildingNumber, -gm.IconValues[index]);
+			onBuildingNumber = -1;
+		}
 	}
 
 	void OnMouseUpAsButton()
 	{
-		Debug.Log("mouse released");
+		if(gameObject.transform.position.y > -1.5f)
+		{
+			if(gameObject.transform.position.x < -4f)
+			{
+				onBuildingNumber = 0;
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, gm.IconValues[index]);
+			}
+			else if(gameObject.transform.position.x > -2.5f && gameObject.transform.position.x < 2.5f)
+			{
+				onBuildingNumber = 1;
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, gm.IconValues[index]);
+			}
+			else if(gameObject.transform.position.x > 4f)
+			{
+				onBuildingNumber = 2;
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, gm.IconValues[index]);
+			}
+			else
+			{
+				ReturnToOriginalPosition();
+			}
+		}
+		else
+		{
+			ReturnToOriginalPosition();
+		}
+	}
+
+	void ReturnToOriginalPosition()
+	{
+		gameObject.transform.position = gm.iconPrefabs[index].transform.position;
+		decrementedText = false;
+		gm.IncrementOrDecrementText(index, 1);
 	}
 }
