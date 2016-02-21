@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
 	public List<GameObject> iconPrefabs = new List<GameObject>();
 
+	List<GameObject> icons = new List<GameObject>();
+
 	public List<GameObject> iconTexts = new List<GameObject>();
 
 	public List<GameObject> buildingTexts = new List<GameObject>();
@@ -30,6 +32,11 @@ public class GameManager : MonoBehaviour
 	int windTurbineValue = 3;
 
 	bool iconsDraggable = true;
+
+	public List<GameObject> Icons
+	{
+		get{return icons;}
+	}
 
 	public List<int> IconValues
 	{
@@ -160,6 +167,8 @@ public class GameManager : MonoBehaviour
 			g.GetComponent<Draggable>().Index = index;
 			g.AddComponent<BoxCollider2D>();
 			g.tag = "Draggable";
+
+			icons.Add(g);
 
 			IncrementOrDecrementText(index, 1);
 
