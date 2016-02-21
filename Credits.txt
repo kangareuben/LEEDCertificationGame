@@ -1,6 +1,30 @@
 Credits:
 
 
+Audio:
+
+Credits Background Music
+Blue_Dot_Sessions_-_04_-_The_Coil_Winds.mp3
+Artist: Blue Dot Sessions
+Song: The Coil Winds
+Album: Vacant Distillery
+http://freemusicarchive.org/music/Blue_Dot_Sessions/Vacant_Distillery/The_Coil_Winds
+
+Game Background Music
+Podington_Bear_-_Golden_Hour.mp3
+Artist: Podington Bear
+Song: Golden Hour
+Album: Springtime
+http://freemusicarchive.org/music/Podington_Bear/Springtime/Golden_Hour_1973
+
+Menu Background Music
+Blue_Dot_Sessions_-_03_-_Curio.mp3
+Artist: Blue Dot Sessions
+Song: Curio
+Album: Vacant Distillery
+http://freemusicarchive.org/music/Blue_Dot_Sessions/Vacant_Distillery/Curio
+
+
 Images:
 
 Appliances
