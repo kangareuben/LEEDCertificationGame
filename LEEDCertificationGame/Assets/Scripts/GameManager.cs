@@ -157,10 +157,91 @@ public class GameManager : MonoBehaviour
 	void CreatePuzzle()
 	{
 		int totalPoints = 0;
+		int bikeRacksCreated = 0;
+		bool bikeRacksAllowed = true;
+		int cleanVentilationCreated = 0;
+		bool cleanVentilationAllowed = true;
+		int cleanWasteManagementCreated = 0;
+		bool cleanWasteManagementAllowed = true;
+		int sustainableDrainageCreated = 0;
+		bool sustainableDrainageAllowed = true;
+		int sustainableIrrigationCreated = 0;
+		bool sustainableIrrigationAllowed = true;
+		int sustainableLandscapingCreated = 0;
+		bool sustainableLandscapingAllowed = true;
 
 		while(totalPoints < 93)
 		{
-			int index = Random.Range(0, iconPrefabs.Count);
+			//Create shower if all else fails
+			int index = 8;
+			bool createdAcceptableIcon = false;
+
+			while(!createdAcceptableIcon)
+			{
+				index = Random.Range(0, iconPrefabs.Count);
+
+				switch(index)
+				{
+				case 0:
+					bikeRacksCreated++;
+					if(bikeRacksCreated >= 4)
+					{
+						bikeRacksAllowed = false;
+					}
+					break;
+				case 1:
+					cleanVentilationCreated++;
+					if(cleanVentilationCreated >= 4)
+					{
+						cleanVentilationAllowed = false;
+					}
+					break;
+				case 2:
+					cleanWasteManagementCreated++;
+					if(cleanWasteManagementCreated >= 4)
+					{
+						cleanWasteManagementAllowed = false;
+					}
+					break;
+				case 10:
+					sustainableDrainageCreated++;
+					if(sustainableDrainageCreated >= 4)
+					{
+						sustainableDrainageAllowed = false;
+					}
+					break;
+				case 11:
+					sustainableIrrigationCreated++;
+					if(sustainableIrrigationCreated >= 4)
+					{
+						sustainableIrrigationAllowed = false;
+					}
+					break;
+				case 12:
+					sustainableLandscapingCreated++;
+					if(sustainableLandscapingCreated >= 4)
+					{
+						sustainableLandscapingAllowed = false;
+					}
+					break;
+				default:
+					break;
+				}
+
+				if(!((index == 0 && !bikeRacksAllowed) ||
+				     (index == 1 && !cleanVentilationAllowed) ||
+				     (index == 2 && !cleanWasteManagementAllowed) ||
+				     (index == 10 && !sustainableDrainageAllowed) ||
+				     (index == 11 && !sustainableIrrigationAllowed) ||
+				     (index == 12 && !sustainableLandscapingAllowed)))
+				{
+					createdAcceptableIcon = true;
+				}
+				else
+				{
+					Debug.Log("Creation of " + index + " not allowed");
+				}
+			}
 
 			GameObject g = Object.Instantiate(iconPrefabs[index], iconPrefabs[index].transform.position, iconPrefabs[index].transform.rotation) as GameObject;
 			g.AddComponent<Draggable>();
