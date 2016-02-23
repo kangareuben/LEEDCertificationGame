@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
 	public List<GameObject> buildingTexts = new List<GameObject>();
 
+	public GameObject feedbackText;
 	public GameObject winText;
 
 	List<int> iconValues = new List<int>();
@@ -239,7 +240,7 @@ public class GameManager : MonoBehaviour
 				}
 				else
 				{
-					Debug.Log("Creation of " + index + " not allowed");
+					//Debug.Log("Creation of " + index + " not allowed");
 				}
 			}
 

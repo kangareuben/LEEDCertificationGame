@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Draggable : MonoBehaviour
 {
@@ -130,10 +131,15 @@ public class Draggable : MonoBehaviour
 				else if(g.name.Contains("Bike") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
 				{
 					bikeRackCount++;
+					/*gm.IncrementOrDecrementBuildingText(onBuildingNumber, -gm.IconValues[index]);
+					onBuildingNumber = -1;
+					ReturnToOriginalPosition();
+					StartCoroutine("DisplayFeedbackText");
+					break;*/
 				}
 			}
 			
-			if(bikeRackCount <= showerCount)
+			if(onBuildingNumber != -1 && bikeRackCount <= showerCount)
 			{
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, 2);
 			}
@@ -166,6 +172,8 @@ public class Draggable : MonoBehaviour
 		}
 		else if(name.Contains("Bike"))
 		{
+
+
 			int showerCount = 0;
 			int bikeRackCount = 0;
 			
@@ -186,5 +194,12 @@ public class Draggable : MonoBehaviour
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -2);
 			}
 		}
+	}
+
+	IEnumerator DisplayFeedbackText()
+	{
+		gm.feedbackText.GetComponent<Text>().enabled = true;
+		yield return new WaitForSeconds(3f);
+		gm.feedbackText.GetComponent<Text>().enabled = false;
 	}
 }
