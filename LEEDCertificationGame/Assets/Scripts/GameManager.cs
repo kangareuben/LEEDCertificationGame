@@ -136,9 +136,45 @@ public class GameManager : MonoBehaviour
 
 	void RandomizeBuildingPointsGoals()
 	{
-		buildingPointsGoals[0] = 36;
-		buildingPointsGoals[1] = 36;
-		buildingPointsGoals[2] = 20;
+		for(int i = 0; i < 3; i++)
+		{
+			BuildBuildingText(i, Random.Range(0, 4));
+		}
+	}
+
+	void BuildBuildingText(int index, int level)
+	{
+		string levelString = "";
+
+		switch(level)
+		{
+		case 0:
+			levelString = "Bronze (10 points)";
+			buildingPointsGoals[index] = 10;
+			break;
+		case 1:
+			levelString = "Silver (14 points)";
+			buildingPointsGoals[index] = 14;
+			break;
+		case 2:
+			levelString = "Gold (20 points)";
+			buildingPointsGoals[index] = 20;
+			break;
+		case 3:
+			levelString = "Platinum (30 points)";
+			buildingPointsGoals[index] = 30;
+			break;
+		default:
+			break;
+		}
+
+		string buildingText = "Building ";
+		buildingText += index;
+		buildingText += "\nGoal: ";
+		buildingText += levelString;
+		buildingText += "\nCurrent points: 0";
+
+		buildingTexts[index].GetComponent<Text>().text = buildingText;
 	}
 
 	void SetTotalGoalPoints()
