@@ -8,12 +8,16 @@ public class GameManager : MonoBehaviour
 	public List<GameObject> iconPrefabs = new List<GameObject>();
 
 	List<GameObject> icons = new List<GameObject>();
+	int[] numberOfIconsOfEachType = new int[14];
 
 	public List<GameObject> iconTexts = new List<GameObject>();
 
 	public List<GameObject> buildings = new List<GameObject>();
 
 	public List<GameObject> buildingTexts = new List<GameObject>();
+
+	int[] buildingPointsGoals = new int[3];
+	int totalGoalPoints = 0;
 
 	public GameObject instructionText;
 	public bool instructionQueued = true;
@@ -59,6 +63,15 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		for(int i = 0; i < 14; i++)
+		{
+			numberOfIconsOfEachType[i] = 0;
+
+			if(i < 3)
+			{
+			}
+		}
+
 		ventilationValue = Random.Range(1, ventilationValue + 1);
 		wasteManagementValue = Random.Range(1, wasteManagementValue + 1);
 		appliancesValue = Random.Range(1, appliancesValue + 1);
@@ -136,12 +149,12 @@ public class GameManager : MonoBehaviour
 			num2 = int.Parse(buildingTexts[2].GetComponent<Text>().text.Substring(buildingTexts[2].GetComponent<Text>().text.Length - 2, 2));
 		}
 
-		if(num0 >= 36 && num1 >= 36 && num2 >= 20)
+		if(num0 >= buildingPointsGoals[0] && num1 >= buildingPointsGoals[1] && num2 >= buildingPointsGoals[2])
 		{
 			StartCoroutine("EndLevel");
 		}
 
-		if(num0 >= 36)
+		if(num0 >= buildingPointsGoals[0])
 		{
 			buildingTexts[0].GetComponent<Text>().color = Color.green;
 		}
@@ -150,7 +163,7 @@ public class GameManager : MonoBehaviour
 			buildingTexts[0].GetComponent<Text>().color = Color.white;
 		}
 
-		if(num1 >= 36)
+		if(num1 >= buildingPointsGoals[1])
 		{
 			buildingTexts[1].GetComponent<Text>().color = Color.green;
 		}
@@ -159,7 +172,7 @@ public class GameManager : MonoBehaviour
 			buildingTexts[1].GetComponent<Text>().color = Color.white;
 		}
 
-		if(num2 >= 20)
+		if(num2 >= buildingPointsGoals[2])
 		{
 			buildingTexts[2].GetComponent<Text>().color = Color.green;
 		}
@@ -185,7 +198,16 @@ public class GameManager : MonoBehaviour
 		int sustainableLandscapingCreated = 0;
 		bool sustainableLandscapingAllowed = true;
 
-		while(totalPoints < 93)
+		buildingPointsGoals[0] = 36;
+		buildingPointsGoals[1] = 36;
+		buildingPointsGoals[2] = 20;
+
+		foreach(int i in buildingPointsGoals)
+		{
+			totalGoalPoints += i;
+		}
+
+		while(totalPoints < totalGoalPoints)
 		{
 			//Create shower if all else fails
 			int index = 8;
@@ -265,6 +287,20 @@ public class GameManager : MonoBehaviour
 			g.tag = "Draggable";
 
 			icons.Add(g);
+
+			numberOfIconsOfEachType[index]++;
+			if(numberOfIconsOfEachType[0] > 0 && numberOfIconsOfEachType[8] > 0)
+			{
+				numberOfIconsOfEachType[0]--;
+				numberOfIconsOfEachType[8]--;
+				totalPoints += 2;
+			}
+			if(numberOfIconsOfEachType[10] > 0 && numberOfIconsOfEachType[11] > 0)
+			{
+				numberOfIconsOfEachType[10]--;
+				numberOfIconsOfEachType[11]--;
+				totalPoints += 3;
+			}
 
 			IncrementOrDecrementText(index, 1);
 

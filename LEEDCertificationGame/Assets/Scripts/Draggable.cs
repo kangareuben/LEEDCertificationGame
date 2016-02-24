@@ -190,9 +190,58 @@ public class Draggable : MonoBehaviour
 				}
 			}
 			
-			if(onBuildingNumber != -1 && bikeRackCount <= showerCount)
+			if(/*onBuildingNumber != -1 &&*/ bikeRackCount <= showerCount)
 			{
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, 2);
+			}
+		}
+		else if(name.Contains("Drainage"))
+		{
+			int drainageCount = 0;
+			int irrigationCount = 0;
+			
+			foreach(GameObject g in gm.Icons)
+			{
+				if(g.name.Contains("Drainage") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+				{
+					drainageCount++;
+				}
+				else if(g.name.Contains("Irrigation") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+				{
+					irrigationCount++;
+				}
+			}
+			
+			if(irrigationCount >= drainageCount)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, 3);
+			}
+		}
+		else if(name.Contains("Irrigation"))
+		{
+			int drainageCount = 0;
+			int irrigationCount = 0;
+			
+			foreach(GameObject g in gm.Icons)
+			{
+				if(g.name.Contains("Drainage") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+				{
+					drainageCount++;
+				}
+				else if(g.name.Contains("Irrigation") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+				{
+					irrigationCount++;
+					/*gm.IncrementOrDecrementBuildingText(onBuildingNumber, -gm.IconValues[index]);
+					onBuildingNumber = -1;
+					ReturnToOriginalPosition();
+					StartCoroutine("DisplayFeedbackText");
+					break;*/
+				}
+			}
+			
+			if(/*onBuildingNumber != -1 &&*/ drainageCount >= irrigationCount)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, 3);
 			}
 		}
 	}
@@ -223,8 +272,6 @@ public class Draggable : MonoBehaviour
 		}
 		else if(name.Contains("Bike"))
 		{
-
-
 			int showerCount = 0;
 			int bikeRackCount = 0;
 			
@@ -243,6 +290,50 @@ public class Draggable : MonoBehaviour
 			if(bikeRackCount <= showerCount)
 			{
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -2);
+			}
+		}
+		else if(name.Contains("Drainage"))
+		{
+			int drainageCount = 0;
+			int irrigationCount = 0;
+			
+			foreach(GameObject g in gm.Icons)
+			{
+				if(g.name.Contains("Drainage") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+				{
+					drainageCount++;
+				}
+				else if(g.name.Contains("Irrigation") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+				{
+					irrigationCount++;
+				}
+			}
+			
+			if(irrigationCount >= drainageCount)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -3);
+			}
+		}
+		else if(name.Contains("Irrigation"))
+		{
+			int drainageCount = 0;
+			int irrigationCount = 0;
+			
+			foreach(GameObject g in gm.Icons)
+			{
+				if(g.name.Contains("Drainage") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+				{
+					drainageCount++;
+				}
+				else if(g.name.Contains("Irrigation") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+				{
+					irrigationCount++;
+				}
+			}
+			
+			if(irrigationCount <= drainageCount)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -3);
 			}
 		}
 	}
