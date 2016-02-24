@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Draggable : MonoBehaviour
 {
+	bool audioPlayed = false;
 	bool decrementedText = false;
 	GameManager gm;
 	int index;
@@ -43,6 +44,12 @@ public class Draggable : MonoBehaviour
 				gm.StopCoroutine("ShowInstructionText");
 				gm.instructionText.GetComponent<Text>().enabled = false;
 				gm.StartCoroutine("ShowCombinationHelpText");
+			}
+
+			if(!audioPlayed)
+			{
+				audioPlayed = true;
+				gm.GetComponents<AudioSource>()[1].Play();
 			}
 
 			float distance_to_screen = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
@@ -97,6 +104,9 @@ public class Draggable : MonoBehaviour
 	void OnMouseUpAsButton()
 	{
 		GetComponent<SpriteRenderer>().color = Color.white;
+
+		gm.GetComponents<AudioSource>()[2].Play();
+		audioPlayed = false;
 
 		foreach(GameObject g in gm.buildings)
 		{

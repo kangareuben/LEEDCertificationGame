@@ -3,6 +3,14 @@ Credits:
 
 Audio:
 
+Click Sound Effect
+
+click_04.wav
+
+http://rcptones.com/dev_tones/tones/click_04.wav
+
+
+
 Credits Background Music
 Blue_Dot_Sessions_-_04_-_The_Coil_Winds.mp3
 Artist: Blue Dot Sessions
@@ -23,6 +31,21 @@ Artist: Blue Dot Sessions
 Song: Curio
 Album: Vacant Distillery
 http://freemusicarchive.org/music/Blue_Dot_Sessions/Vacant_Distillery/Curio
+
+
+Pick Up Sound Effect
+
+pop_drip.wav
+
+http://rcptones.com/dev_tones/tones/pop_drip.wav
+
+
+
+Set Down Sound Effect
+
+digi_plink.wav
+
+http://rcptones.com/dev_tones/tones/digi_plink.wav
 
 
 Images:
