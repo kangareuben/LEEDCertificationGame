@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
 
 	public List<GameObject> buildingTexts = new List<GameObject>();
 
+	public GameObject instructionText;
+	public bool instructionQueued = true;
+
 	public GameObject feedbackText;
 	public GameObject winText;
 
@@ -81,6 +84,8 @@ public class GameManager : MonoBehaviour
 		iconValues.Add(windTurbineValue);
 
 		CreatePuzzle();
+
+		StartCoroutine("ShowInstructionText");
 	}
 	
 	// Update is called once per frame
@@ -306,5 +311,11 @@ public class GameManager : MonoBehaviour
 	void RestartPuzzle()
 	{
 		Application.LoadLevel(Application.loadedLevel);
+	}
+
+	public IEnumerator ShowInstructionText()
+	{
+		yield return new WaitForSeconds(10f);
+		instructionText.GetComponent<Text>().enabled = true;
 	}
 }
