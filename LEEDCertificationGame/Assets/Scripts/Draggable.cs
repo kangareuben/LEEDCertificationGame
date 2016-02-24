@@ -42,6 +42,7 @@ public class Draggable : MonoBehaviour
 				gm.instructionQueued = false;
 				gm.StopCoroutine("ShowInstructionText");
 				gm.instructionText.GetComponent<Text>().enabled = false;
+				gm.StartCoroutine("ShowCombinationHelpText");
 			}
 
 			float distance_to_screen = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;

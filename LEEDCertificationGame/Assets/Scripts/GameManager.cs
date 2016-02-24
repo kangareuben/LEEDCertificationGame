@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 	public GameObject instructionText;
 	public bool instructionQueued = true;
 
+	public GameObject combinationHelpText;
+
 	public GameObject feedbackText;
 	public GameObject winText;
 
@@ -313,9 +315,17 @@ public class GameManager : MonoBehaviour
 		Application.LoadLevel(Application.loadedLevel);
 	}
 
-	public IEnumerator ShowInstructionText()
+	IEnumerator ShowInstructionText()
 	{
 		yield return new WaitForSeconds(10f);
 		instructionText.GetComponent<Text>().enabled = true;
+	}
+
+	IEnumerator ShowCombinationHelpText()
+	{
+		yield return new WaitForSeconds(20f);
+		combinationHelpText.GetComponent<Text>().enabled = true;
+		yield return new WaitForSeconds(10f);
+		combinationHelpText.GetComponent<Text>().enabled = false;
 	}
 }
