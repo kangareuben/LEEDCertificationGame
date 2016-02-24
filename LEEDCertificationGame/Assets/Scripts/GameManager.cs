@@ -63,40 +63,7 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		for(int i = 0; i < 14; i++)
-		{
-			numberOfIconsOfEachType[i] = 0;
-
-			if(i < 3)
-			{
-			}
-		}
-
-		ventilationValue = Random.Range(1, ventilationValue + 1);
-		wasteManagementValue = Random.Range(1, wasteManagementValue + 1);
-		appliancesValue = Random.Range(1, appliancesValue + 1);
-		insulationValue = Random.Range(1, insulationValue + 1);
-		lightingValue = Random.Range(1, lightingValue + 1);
-		windowsValue = Random.Range(1, windowsValue + 1);
-		geothermalValue = Random.Range(3, geothermalValue + 1);
-		drainageValue = Random.Range(1, drainageValue + 1);
-		irrigationValue = Random.Range(1, irrigationValue + 1);
-		landscapingValue = Random.Range(1, landscapingValue + 1);
-
-		iconValues.Add(bikeRackValue);
-		iconValues.Add(ventilationValue);
-		iconValues.Add(wasteManagementValue);
-		iconValues.Add(appliancesValue);
-		iconValues.Add(insulationValue);
-		iconValues.Add(lightingValue);
-		iconValues.Add(windowsValue);
-		iconValues.Add(geothermalValue);
-		iconValues.Add(showerValue);
-		iconValues.Add(solarPanelValue);
-		iconValues.Add(drainageValue);
-		iconValues.Add(irrigationValue);
-		iconValues.Add(landscapingValue);
-		iconValues.Add(windTurbineValue);
+		RandomizeIconValues();
 
 		CreatePuzzle();
 
@@ -118,73 +85,74 @@ public class GameManager : MonoBehaviour
 
 	void CheckForWin()
 	{
-		int num0;
-		int num1;
-		int num2;
-		
-		if(buildingTexts[0].GetComponent<Text>().text.Substring(buildingTexts[0].GetComponent<Text>().text.Length - 2, 1) == " ")
-		{
-			num0 = int.Parse(buildingTexts[0].GetComponent<Text>().text.Substring(buildingTexts[0].GetComponent<Text>().text.Length - 1));
-		}
-		else
-		{
-			num0 = int.Parse(buildingTexts[0].GetComponent<Text>().text.Substring(buildingTexts[0].GetComponent<Text>().text.Length - 2, 2));
-		}
+		int building0Points = GetCurrentBuildingPoints(0);
+		int building1Points = GetCurrentBuildingPoints(1);
+		int building2Points = GetCurrentBuildingPoints(2);
 
-		if(buildingTexts[1].GetComponent<Text>().text.Substring(buildingTexts[1].GetComponent<Text>().text.Length - 2, 1) == " ")
-		{
-			num1 = int.Parse(buildingTexts[1].GetComponent<Text>().text.Substring(buildingTexts[1].GetComponent<Text>().text.Length - 1));
-		}
-		else
-		{
-			num1 = int.Parse(buildingTexts[1].GetComponent<Text>().text.Substring(buildingTexts[1].GetComponent<Text>().text.Length - 2, 2));
-		}
-
-		if(buildingTexts[2].GetComponent<Text>().text.Substring(buildingTexts[2].GetComponent<Text>().text.Length - 2, 1) == " ")
-		{
-			num2 = int.Parse(buildingTexts[2].GetComponent<Text>().text.Substring(buildingTexts[2].GetComponent<Text>().text.Length - 1));
-		}
-		else
-		{
-			num2 = int.Parse(buildingTexts[2].GetComponent<Text>().text.Substring(buildingTexts[2].GetComponent<Text>().text.Length - 2, 2));
-		}
-
-		if(num0 >= buildingPointsGoals[0] && num1 >= buildingPointsGoals[1] && num2 >= buildingPointsGoals[2])
+		if(building0Points >= buildingPointsGoals[0] && building1Points >= buildingPointsGoals[1] && building2Points >= buildingPointsGoals[2])
 		{
 			StartCoroutine("EndLevel");
 		}
 
-		if(num0 >= buildingPointsGoals[0])
+		GreenBuildingTextIfAppropriate(0, building0Points);
+		GreenBuildingTextIfAppropriate(1, building1Points);
+		GreenBuildingTextIfAppropriate(2, building2Points);
+	}
+
+	int GetCurrentBuildingPoints(int buildingNumber)
+	{
+		int currentPoints;
+
+		if(buildingTexts[buildingNumber].GetComponent<Text>().text.Substring(buildingTexts[buildingNumber].GetComponent<Text>().text.Length - 2, 1) == " ")
 		{
-			buildingTexts[0].GetComponent<Text>().color = Color.green;
+			currentPoints = int.Parse(buildingTexts[buildingNumber].GetComponent<Text>().text.Substring(buildingTexts[buildingNumber].GetComponent<Text>().text.Length - 1));
 		}
 		else
 		{
-			buildingTexts[0].GetComponent<Text>().color = Color.white;
+			currentPoints = int.Parse(buildingTexts[buildingNumber].GetComponent<Text>().text.Substring(buildingTexts[buildingNumber].GetComponent<Text>().text.Length - 2, 2));
 		}
 
-		if(num1 >= buildingPointsGoals[1])
-		{
-			buildingTexts[1].GetComponent<Text>().color = Color.green;
-		}
-		else
-		{
-			buildingTexts[1].GetComponent<Text>().color = Color.white;
-		}
+		return currentPoints;
+	}
 
-		if(num2 >= buildingPointsGoals[2])
+	void GreenBuildingTextIfAppropriate(int index, int buildingPoints)
+	{
+		if(buildingPoints >= buildingPointsGoals[index])
 		{
-			buildingTexts[2].GetComponent<Text>().color = Color.green;
+			buildingTexts[index].GetComponent<Text>().color = Color.green;
 		}
 		else
 		{
-			buildingTexts[2].GetComponent<Text>().color = Color.white;
+			buildingTexts[index].GetComponent<Text>().color = Color.white;
 		}
 	}
 
 	void CreatePuzzle()
 	{
+		RandomizeBuildingPointsGoals();
+		SetTotalGoalPoints();
+		CreateIcons();
+	}
+
+	void RandomizeBuildingPointsGoals()
+	{
+		buildingPointsGoals[0] = 36;
+		buildingPointsGoals[1] = 36;
+		buildingPointsGoals[2] = 20;
+	}
+
+	void SetTotalGoalPoints()
+	{
+		foreach(int i in buildingPointsGoals)
+		{
+			totalGoalPoints += i;
+		}
+	}
+
+	void CreateIcons()
+	{
 		int totalPoints = 0;
+
 		int bikeRacksCreated = 0;
 		bool bikeRacksAllowed = true;
 		int cleanVentilationCreated = 0;
@@ -198,25 +166,16 @@ public class GameManager : MonoBehaviour
 		int sustainableLandscapingCreated = 0;
 		bool sustainableLandscapingAllowed = true;
 
-		buildingPointsGoals[0] = 36;
-		buildingPointsGoals[1] = 36;
-		buildingPointsGoals[2] = 20;
-
-		foreach(int i in buildingPointsGoals)
-		{
-			totalGoalPoints += i;
-		}
-
 		while(totalPoints < totalGoalPoints)
 		{
 			//Create shower if all else fails
 			int index = 8;
 			bool createdAcceptableIcon = false;
-
+			
 			while(!createdAcceptableIcon)
 			{
 				index = Random.Range(0, iconPrefabs.Count);
-
+				
 				switch(index)
 				{
 				case 0:
@@ -264,7 +223,7 @@ public class GameManager : MonoBehaviour
 				default:
 					break;
 				}
-
+				
 				if(!((index == 0 && !bikeRacksAllowed) ||
 				     (index == 1 && !cleanVentilationAllowed) ||
 				     (index == 2 && !cleanWasteManagementAllowed) ||
@@ -279,35 +238,50 @@ public class GameManager : MonoBehaviour
 					//Debug.Log("Creation of " + index + " not allowed");
 				}
 			}
+			
+			CreateIcon(index);
 
-			GameObject g = Object.Instantiate(iconPrefabs[index], iconPrefabs[index].transform.position, iconPrefabs[index].transform.rotation) as GameObject;
-			g.AddComponent<Draggable>();
-			g.GetComponent<Draggable>().Index = index;
-			g.AddComponent<BoxCollider2D>();
-			g.tag = "Draggable";
-
-			icons.Add(g);
-
-			numberOfIconsOfEachType[index]++;
-			if(numberOfIconsOfEachType[0] > 0 && numberOfIconsOfEachType[8] > 0)
-			{
-				numberOfIconsOfEachType[0]--;
-				numberOfIconsOfEachType[8]--;
-				totalPoints += 2;
-			}
-			if(numberOfIconsOfEachType[10] > 0 && numberOfIconsOfEachType[11] > 0)
-			{
-				numberOfIconsOfEachType[10]--;
-				numberOfIconsOfEachType[11]--;
-				totalPoints += 3;
-			}
-
+			totalPoints += AddForSpecialCases();
+			
 			IncrementOrDecrementText(index, 1);
-
+			
 			totalPoints += iconValues[index];
 		}
-
+		
 		Debug.Log(totalPoints);
+	}
+
+	void CreateIcon(int index)
+	{
+		GameObject g = Object.Instantiate(iconPrefabs[index], iconPrefabs[index].transform.position, iconPrefabs[index].transform.rotation) as GameObject;
+		g.AddComponent<Draggable>();
+		g.GetComponent<Draggable>().Index = index;
+		g.AddComponent<BoxCollider2D>();
+		g.tag = "Draggable";
+		
+		icons.Add(g);
+		
+		numberOfIconsOfEachType[index]++;
+	}
+
+	int AddForSpecialCases()
+	{
+		int toAdd = 0;
+
+		if(numberOfIconsOfEachType[0] > 0 && numberOfIconsOfEachType[8] > 0)
+		{
+			numberOfIconsOfEachType[0]--;
+			numberOfIconsOfEachType[8]--;
+			toAdd += 2;
+		}
+		if(numberOfIconsOfEachType[10] > 0 && numberOfIconsOfEachType[11] > 0)
+		{
+			numberOfIconsOfEachType[10]--;
+			numberOfIconsOfEachType[11]--;
+			toAdd += 3;
+		}
+
+		return toAdd;
 	}
 
 	IEnumerator EndLevel()
@@ -344,6 +318,35 @@ public class GameManager : MonoBehaviour
 
 		num += value;
 		buildingTexts[index].GetComponent<Text>().text = s + num.ToString();
+	}
+
+	void RandomizeIconValues()
+	{
+		ventilationValue = Random.Range(1, ventilationValue + 1);
+		wasteManagementValue = Random.Range(1, wasteManagementValue + 1);
+		appliancesValue = Random.Range(1, appliancesValue + 1);
+		insulationValue = Random.Range(1, insulationValue + 1);
+		lightingValue = Random.Range(1, lightingValue + 1);
+		windowsValue = Random.Range(1, windowsValue + 1);
+		geothermalValue = Random.Range(3, geothermalValue + 1);
+		drainageValue = Random.Range(1, drainageValue + 1);
+		irrigationValue = Random.Range(1, irrigationValue + 1);
+		landscapingValue = Random.Range(1, landscapingValue + 1);
+		
+		iconValues.Add(bikeRackValue);
+		iconValues.Add(ventilationValue);
+		iconValues.Add(wasteManagementValue);
+		iconValues.Add(appliancesValue);
+		iconValues.Add(insulationValue);
+		iconValues.Add(lightingValue);
+		iconValues.Add(windowsValue);
+		iconValues.Add(geothermalValue);
+		iconValues.Add(showerValue);
+		iconValues.Add(solarPanelValue);
+		iconValues.Add(drainageValue);
+		iconValues.Add(irrigationValue);
+		iconValues.Add(landscapingValue);
+		iconValues.Add(windTurbineValue);
 	}
 
 	void RestartPuzzle()
