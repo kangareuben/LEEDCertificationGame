@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class Draggable : MonoBehaviour
@@ -8,6 +9,9 @@ public class Draggable : MonoBehaviour
 	GameManager gm;
 	int index;
 	int onBuildingNumber = -1;
+
+	Color negativeHighlightColor;
+	Color positiveHighlightColor;
 
 	public int Index
 	{
@@ -19,6 +23,8 @@ public class Draggable : MonoBehaviour
 	void Start()
 	{
 		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+		negativeHighlightColor = new Color(1f, 0.75f, 0.75f);
+		positiveHighlightColor = new Color(0.75f, 1f, 0.75f);
 	}
 	
 	// Update is called once per frame
@@ -34,6 +40,36 @@ public class Draggable : MonoBehaviour
 			float distance_to_screen = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
 			Vector3 pos_move = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));
 			transform.position = new Vector3(pos_move.x, pos_move.y, transform.position.z);
+
+			if(gameObject.transform.position.y > -1.5f &&
+			  ((gameObject.transform.position.x > -9f && gameObject.transform.position.x < -4f) ||
+			  (gameObject.transform.position.x > -2.5f && gameObject.transform.position.x < 2.5f) ||
+			  (gameObject.transform.position.x > 4f && gameObject.transform.position.x < 9f)))
+			{
+				GetComponent<SpriteRenderer>().color = positiveHighlightColor;
+
+				if(gameObject.transform.position.x < -4f)
+				{
+					gm.buildings[0].GetComponent<SpriteRenderer>().color = positiveHighlightColor;
+				}
+				else if(gameObject.transform.position.x > -2.5f && gameObject.transform.position.x < 2.5f)
+				{
+					gm.buildings[1].GetComponent<SpriteRenderer>().color = positiveHighlightColor;
+				}
+				else if(gameObject.transform.position.x > 4f)
+				{
+					gm.buildings[2].GetComponent<SpriteRenderer>().color = positiveHighlightColor;
+				}
+			}
+			else
+			{
+				GetComponent<SpriteRenderer>().color = negativeHighlightColor;
+
+				foreach(GameObject g in gm.buildings)
+				{
+					g.GetComponent<SpriteRenderer>().color = Color.white;
+				}
+			}
 
 			if(!decrementedText)
 			{
@@ -52,9 +88,16 @@ public class Draggable : MonoBehaviour
 
 	void OnMouseUpAsButton()
 	{
+		GetComponent<SpriteRenderer>().color = Color.white;
+
+		foreach(GameObject g in gm.buildings)
+		{
+			g.GetComponent<SpriteRenderer>().color = Color.white;
+		}
+
 		if(gameObject.transform.position.y > -1.5f)
 		{
-			if(gameObject.transform.position.x < -4f)
+			if(gameObject.transform.position.x > -9f && gameObject.transform.position.x < -4f)
 			{
 				onBuildingNumber = 0;
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, gm.IconValues[index]);
@@ -68,7 +111,7 @@ public class Draggable : MonoBehaviour
 
 				CheckAllTheCases();
 			}
-			else if(gameObject.transform.position.x > 4f)
+			else if(gameObject.transform.position.x > 4f && gameObject.transform.position.x < 9f)
 			{
 				onBuildingNumber = 2;
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, gm.IconValues[index]);

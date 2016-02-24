@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
 	public List<GameObject> iconTexts = new List<GameObject>();
 
+	public List<GameObject> buildings = new List<GameObject>();
+
 	public List<GameObject> buildingTexts = new List<GameObject>();
 
 	public GameObject feedbackText;
