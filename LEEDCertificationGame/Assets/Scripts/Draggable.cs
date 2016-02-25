@@ -156,194 +156,71 @@ public class Draggable : MonoBehaviour
 
 	void CheckAllTheCases()
 	{
-		if(name.Contains("Shower"))
+		CheckSpecificCase("Shower", "Bike", 2);
+		CheckSpecificCase("Drainage", "Irrigation", 3);
+		CheckSpecificCase("Insulation", "Windows", 1);
+	}
+
+	void CheckSpecificCase(string item1, string item2, int pointsToAdd)
+	{
+		int item1Count = GetIconCount(item1, onBuildingNumber);
+		int item2Count = GetIconCount(item2, onBuildingNumber);
+
+		if(name.Contains(item1))
 		{
-			int showerCount = 0;
-			int bikeRackCount = 0;
-			
-			foreach(GameObject g in gm.Icons)
+			if(item1Count <= item2Count)
 			{
-				if(g.name.Contains("Shower") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					showerCount++;
-				}
-				else if(g.name.Contains("Bike") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					bikeRackCount++;
-				}
-			}
-			
-			if(bikeRackCount >= showerCount)
-			{
-				gm.IncrementOrDecrementBuildingText(onBuildingNumber, 2);
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, pointsToAdd);
 			}
 		}
-		else if(name.Contains("Bike"))
+		else if(name.Contains(item2))
 		{
-			int showerCount = 0;
-			int bikeRackCount = 0;
-			
-			foreach(GameObject g in gm.Icons)
+			if(item1Count >= item2Count)
 			{
-				if(g.name.Contains("Shower") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					showerCount++;
-				}
-				else if(g.name.Contains("Bike") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					bikeRackCount++;
-					/*gm.IncrementOrDecrementBuildingText(onBuildingNumber, -gm.IconValues[index]);
-					onBuildingNumber = -1;
-					ReturnToOriginalPosition();
-					StartCoroutine("DisplayFeedbackText");
-					break;*/
-				}
-			}
-			
-			if(/*onBuildingNumber != -1 &&*/ bikeRackCount <= showerCount)
-			{
-				gm.IncrementOrDecrementBuildingText(onBuildingNumber, 2);
-			}
-		}
-		else if(name.Contains("Drainage"))
-		{
-			int drainageCount = 0;
-			int irrigationCount = 0;
-			
-			foreach(GameObject g in gm.Icons)
-			{
-				if(g.name.Contains("Drainage") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					drainageCount++;
-				}
-				else if(g.name.Contains("Irrigation") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					irrigationCount++;
-				}
-			}
-			
-			if(irrigationCount >= drainageCount)
-			{
-				gm.IncrementOrDecrementBuildingText(onBuildingNumber, 3);
-			}
-		}
-		else if(name.Contains("Irrigation"))
-		{
-			int drainageCount = 0;
-			int irrigationCount = 0;
-			
-			foreach(GameObject g in gm.Icons)
-			{
-				if(g.name.Contains("Drainage") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					drainageCount++;
-				}
-				else if(g.name.Contains("Irrigation") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					irrigationCount++;
-					/*gm.IncrementOrDecrementBuildingText(onBuildingNumber, -gm.IconValues[index]);
-					onBuildingNumber = -1;
-					ReturnToOriginalPosition();
-					StartCoroutine("DisplayFeedbackText");
-					break;*/
-				}
-			}
-			
-			if(/*onBuildingNumber != -1 &&*/ drainageCount >= irrigationCount)
-			{
-				gm.IncrementOrDecrementBuildingText(onBuildingNumber, 3);
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, pointsToAdd);
 			}
 		}
 	}
 
+	int GetIconCount(string iconName, int buildingNumber)
+	{
+		int iconCount = 0;
+
+		foreach(GameObject g in gm.Icons)
+		{
+			if(g.name.Contains(iconName) && g.GetComponent<Draggable>().onBuildingNumber == buildingNumber)
+			{
+				iconCount++;
+			}
+		}
+
+		return iconCount;
+	}
+
 	void CheckAllTheCasesBackwards()
 	{
-		if(name.Contains("Shower"))
+		CheckSpecificCaseBackwards("Shower", "Bike", 2);
+		CheckSpecificCaseBackwards("Drainage", "Irrigation", 3);
+		CheckSpecificCaseBackwards("Insulation", "Windows", 1);
+	}
+
+	void CheckSpecificCaseBackwards(string item1, string item2, int pointsToSubtract)
+	{
+		int item1Count = GetIconCount(item1, onBuildingNumber);
+		int item2Count = GetIconCount(item2, onBuildingNumber);
+
+		if(name.Contains(item1))
 		{
-			int showerCount = 0;
-			int bikeRackCount = 0;
-			
-			foreach(GameObject g in gm.Icons)
+			if(item1Count <= item2Count)
 			{
-				if(g.name.Contains("Shower") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					showerCount++;
-				}
-				else if(g.name.Contains("Bike") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					bikeRackCount++;
-				}
-			}
-			
-			if(bikeRackCount >= showerCount)
-			{
-				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -2);
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -pointsToSubtract);
 			}
 		}
-		else if(name.Contains("Bike"))
+		else if(name.Contains(item2))
 		{
-			int showerCount = 0;
-			int bikeRackCount = 0;
-			
-			foreach(GameObject g in gm.Icons)
+			if(item1Count >= item2Count)
 			{
-				if(g.name.Contains("Shower") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					showerCount++;
-				}
-				else if(g.name.Contains("Bike") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					bikeRackCount++;
-				}
-			}
-			
-			if(bikeRackCount <= showerCount)
-			{
-				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -2);
-			}
-		}
-		else if(name.Contains("Drainage"))
-		{
-			int drainageCount = 0;
-			int irrigationCount = 0;
-			
-			foreach(GameObject g in gm.Icons)
-			{
-				if(g.name.Contains("Drainage") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					drainageCount++;
-				}
-				else if(g.name.Contains("Irrigation") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					irrigationCount++;
-				}
-			}
-			
-			if(irrigationCount >= drainageCount)
-			{
-				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -3);
-			}
-		}
-		else if(name.Contains("Irrigation"))
-		{
-			int drainageCount = 0;
-			int irrigationCount = 0;
-			
-			foreach(GameObject g in gm.Icons)
-			{
-				if(g.name.Contains("Drainage") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					drainageCount++;
-				}
-				else if(g.name.Contains("Irrigation") && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
-				{
-					irrigationCount++;
-				}
-			}
-			
-			if(irrigationCount <= drainageCount)
-			{
-				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -3);
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -pointsToSubtract);
 			}
 		}
 	}

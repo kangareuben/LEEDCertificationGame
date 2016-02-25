@@ -304,17 +304,22 @@ public class GameManager : MonoBehaviour
 	{
 		int toAdd = 0;
 
-		if(numberOfIconsOfEachType[0] > 0 && numberOfIconsOfEachType[8] > 0)
+		toAdd += AddForSpecialCase(0, 8, 2);
+		toAdd += AddForSpecialCase(4, 6, 1);
+		toAdd += AddForSpecialCase(10, 11, 3);
+
+		return toAdd;
+	}
+
+	int AddForSpecialCase(int index1, int index2, int pointsToAdd)
+	{
+		int toAdd = 0;
+
+		if(numberOfIconsOfEachType[index1] > 0 && numberOfIconsOfEachType[index2] > 0)
 		{
-			numberOfIconsOfEachType[0]--;
-			numberOfIconsOfEachType[8]--;
-			toAdd += 2;
-		}
-		if(numberOfIconsOfEachType[10] > 0 && numberOfIconsOfEachType[11] > 0)
-		{
-			numberOfIconsOfEachType[10]--;
-			numberOfIconsOfEachType[11]--;
-			toAdd += 3;
+			numberOfIconsOfEachType[index1]--;
+			numberOfIconsOfEachType[index2]--;
+			toAdd += pointsToAdd;
 		}
 
 		return toAdd;
