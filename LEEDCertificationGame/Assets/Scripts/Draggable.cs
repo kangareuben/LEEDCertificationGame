@@ -184,6 +184,7 @@ public class Draggable : MonoBehaviour
 		CheckSpecificCase("Shower", "Bike", 2);
 		CheckSpecificCase("Drainage", "Irrigation", 3);
 		CheckSpecificCase("Insulation", "Windows", 1);
+		CheckSpecificCase("Geothermal", "Solar", "Wind", 5);
 	}
 
 	void CheckSpecificCase(string item1, string item2, int pointsToAdd)
@@ -191,19 +192,18 @@ public class Draggable : MonoBehaviour
 		int item1Count = GetIconCount(item1, onBuildingNumber);
 		int item2Count = GetIconCount(item2, onBuildingNumber);
 
-		Debug.Log(item1Count + " " + item1 + ", " + item2Count + " " + item2);
-
 		if(name.Contains(item1))
 		{
 			if(item1Count <= item2Count)
 			{
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, pointsToAdd);
 
+				StartCoroutine("FlashGreen");
+
 				foreach(GameObject g in gm.Icons)
 				{
 					if(g.name.Contains(item2) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
 					{
-						StartCoroutine("FlashGreen");
 						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
 						return;
 					}
@@ -217,11 +217,12 @@ public class Draggable : MonoBehaviour
 			{
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, pointsToAdd);
 
+				StartCoroutine("FlashGreen");
+
 				foreach(GameObject g in gm.Icons)
 				{
 					if(g.name.Contains(item1) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
 					{
-						StartCoroutine("FlashGreen");
 						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
 						return;
 					}
@@ -229,6 +230,96 @@ public class Draggable : MonoBehaviour
 			}
 		}
 	}
+
+	void CheckSpecificCase(string item1, string item2, string item3, int pointsToAdd)
+	{
+		int item1Count = GetIconCount(item1, onBuildingNumber);
+		int item2Count = GetIconCount(item2, onBuildingNumber);
+		int item3Count = GetIconCount(item3, onBuildingNumber);
+
+		if(name.Contains(item1))
+		{
+			if(item1Count <= item2Count && item1Count <= item3Count)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, pointsToAdd);
+
+				StartCoroutine("FlashGreen");
+
+				foreach(GameObject g in gm.Icons)
+				{
+					if(g.name.Contains(item2) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+					{
+						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
+						break;
+					}
+				}
+				foreach(GameObject g in gm.Icons)
+				{
+					if(g.name.Contains(item3) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+					{
+						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
+						return;
+					}
+				}
+				
+			}
+		}
+		else if(name.Contains(item2))
+		{
+			if(item1Count >= item2Count && item3Count >= item2Count)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, pointsToAdd);
+
+				StartCoroutine("FlashGreen");
+
+				foreach(GameObject g in gm.Icons)
+				{
+					if(g.name.Contains(item1) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+					{
+						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
+						break;
+					}
+				}
+
+				foreach(GameObject g in gm.Icons)
+				{
+					if(g.name.Contains(item3) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+					{
+						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
+						return;
+					}
+				}
+			}
+		}
+		else if(name.Contains(item3))
+		{
+			if(item1Count >= item3Count && item3Count <= item2Count)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, pointsToAdd);
+				
+				StartCoroutine("FlashGreen");
+				
+				foreach(GameObject g in gm.Icons)
+				{
+					if(g.name.Contains(item1) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+					{
+						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
+						break;
+					}
+				}
+				
+				foreach(GameObject g in gm.Icons)
+				{
+					if(g.name.Contains(item2) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+					{
+						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
+						return;
+					}
+				}
+			}
+		}
+	}
+
 
 	int GetIconCount(string iconName, int buildingNumber)
 	{
@@ -250,6 +341,7 @@ public class Draggable : MonoBehaviour
 		CheckSpecificCaseBackwards("Shower", "Bike", 2);
 		CheckSpecificCaseBackwards("Drainage", "Irrigation", 3);
 		CheckSpecificCaseBackwards("Insulation", "Windows", 1);
+		CheckSpecificCaseBackwards("Geothermal", "Solar", "Wind", 5);
 	}
 
 	void CheckSpecificCaseBackwards(string item1, string item2, int pointsToSubtract)
@@ -267,6 +359,35 @@ public class Draggable : MonoBehaviour
 		else if(name.Contains(item2))
 		{
 			if(item1Count >= item2Count)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -pointsToSubtract);
+			}
+		}
+	}
+
+	void CheckSpecificCaseBackwards(string item1, string item2, string item3, int pointsToSubtract)
+	{
+		int item1Count = GetIconCount(item1, onBuildingNumber);
+		int item2Count = GetIconCount(item2, onBuildingNumber);
+		int item3Count = GetIconCount(item3, onBuildingNumber);
+		
+		if(name.Contains(item1))
+		{
+			if(item1Count <= item2Count && item1Count <= item3Count)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -pointsToSubtract);
+			}
+		}
+		else if(name.Contains(item2))
+		{
+			if(item1Count >= item2Count && item2Count <= item3Count)
+			{
+				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -pointsToSubtract);
+			}
+		}
+		else if(name.Contains(item3))
+		{
+			if(item1Count >= item3Count && item2Count >= item3Count)
 			{
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -pointsToSubtract);
 			}

@@ -317,6 +317,7 @@ public class GameManager : MonoBehaviour
 		toAdd += AddForSpecialCase(0, 8, 2);
 		toAdd += AddForSpecialCase(4, 6, 1);
 		toAdd += AddForSpecialCase(10, 11, 3);
+		toAdd += AddForSpecialCase(7, 9, 13, 5);
 
 		return toAdd;
 	}
@@ -332,6 +333,21 @@ public class GameManager : MonoBehaviour
 			toAdd += pointsToAdd;
 		}
 
+		return toAdd;
+	}
+
+	int AddForSpecialCase(int index1, int index2, int index3, int pointsToAdd)
+	{
+		int toAdd = 0;
+		
+		if(numberOfIconsOfEachType[index1] > 0 && numberOfIconsOfEachType[index2] > 0 && numberOfIconsOfEachType[index3] > 0)
+		{
+			numberOfIconsOfEachType[index1]--;
+			numberOfIconsOfEachType[index2]--;
+			numberOfIconsOfEachType[index3]--;
+			toAdd += pointsToAdd;
+		}
+		
 		return toAdd;
 	}
 
