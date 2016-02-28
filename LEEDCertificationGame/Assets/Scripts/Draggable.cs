@@ -191,11 +191,24 @@ public class Draggable : MonoBehaviour
 		int item1Count = GetIconCount(item1, onBuildingNumber);
 		int item2Count = GetIconCount(item2, onBuildingNumber);
 
+		Debug.Log(item1Count + " " + item1 + ", " + item2Count + " " + item2);
+
 		if(name.Contains(item1))
 		{
 			if(item1Count <= item2Count)
 			{
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, pointsToAdd);
+
+				foreach(GameObject g in gm.Icons)
+				{
+					if(g.name.Contains(item2) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+					{
+						StartCoroutine("FlashGreen");
+						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
+						return;
+					}
+				}
+
 			}
 		}
 		else if(name.Contains(item2))
@@ -203,6 +216,16 @@ public class Draggable : MonoBehaviour
 			if(item1Count >= item2Count)
 			{
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, pointsToAdd);
+
+				foreach(GameObject g in gm.Icons)
+				{
+					if(g.name.Contains(item1) && g.GetComponent<Draggable>().onBuildingNumber == onBuildingNumber)
+					{
+						StartCoroutine("FlashGreen");
+						g.GetComponent<Draggable>().StartCoroutine("FlashGreen");
+						return;
+					}
+				}
 			}
 		}
 	}
@@ -247,6 +270,17 @@ public class Draggable : MonoBehaviour
 			{
 				gm.IncrementOrDecrementBuildingText(onBuildingNumber, -pointsToSubtract);
 			}
+		}
+	}
+
+	public IEnumerator FlashGreen()
+	{
+		for(int i = 0; i < 3; i++)
+		{
+			GetComponent<SpriteRenderer>().color = positiveHighlightColor;
+			yield return new WaitForSeconds(.25f);
+			GetComponent<SpriteRenderer>().color = Color.white;
+			yield return new WaitForSeconds(.25f);
 		}
 	}
 
