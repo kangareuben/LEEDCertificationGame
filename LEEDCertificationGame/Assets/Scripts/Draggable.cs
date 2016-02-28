@@ -185,6 +185,7 @@ public class Draggable : MonoBehaviour
 		CheckSpecificCase("Drainage", "Irrigation", 3);
 		CheckSpecificCase("Insulation", "Windows", 1);
 		CheckSpecificCase("Geothermal", "Solar", "Wind", 5);
+		CheckSpecificCase("Appliance", "Light", 1);
 	}
 
 	void CheckSpecificCase(string item1, string item2, int pointsToAdd)
@@ -342,6 +343,7 @@ public class Draggable : MonoBehaviour
 		CheckSpecificCaseBackwards("Drainage", "Irrigation", 3);
 		CheckSpecificCaseBackwards("Insulation", "Windows", 1);
 		CheckSpecificCaseBackwards("Geothermal", "Solar", "Wind", 5);
+		CheckSpecificCaseBackwards("Appliance", "Light", 1);
 	}
 
 	void CheckSpecificCaseBackwards(string item1, string item2, int pointsToSubtract)

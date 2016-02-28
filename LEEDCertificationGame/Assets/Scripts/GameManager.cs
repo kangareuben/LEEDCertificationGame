@@ -79,6 +79,11 @@ public class GameManager : MonoBehaviour
 			Application.Quit();
 		}
 
+		if(Input.GetKeyDown(KeyCode.R))
+		{
+			RestartPuzzle();
+		}
+
 		if(iconsDraggable){
 			CheckForWin();
 		}
@@ -315,6 +320,7 @@ public class GameManager : MonoBehaviour
 		int toAdd = 0;
 
 		toAdd += AddForSpecialCase(0, 8, 2);
+		toAdd += AddForSpecialCase(3, 5, 1);
 		toAdd += AddForSpecialCase(4, 6, 1);
 		toAdd += AddForSpecialCase(10, 11, 3);
 		toAdd += AddForSpecialCase(7, 9, 13, 5);
