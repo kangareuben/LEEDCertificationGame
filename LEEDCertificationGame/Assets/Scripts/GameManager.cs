@@ -415,7 +415,5 @@ public class GameManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds(20f);
 		combinationHelpText.GetComponent<Text>().enabled = true;
-		yield return new WaitForSeconds(10f);
-		combinationHelpText.GetComponent<Text>().enabled = false;
 	}
 }
