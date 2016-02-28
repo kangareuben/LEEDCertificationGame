@@ -7,12 +7,19 @@ public class Draggable : MonoBehaviour
 {
 	bool audioPlayed = false;
 	bool decrementedText = false;
+	TextMesh descriptionText;
 	GameManager gm;
 	int index;
 	int onBuildingNumber = -1;
 
 	Color negativeHighlightColor;
 	Color positiveHighlightColor;
+
+	public TextMesh DescriptionText
+	{
+		get{return descriptionText;}
+		set{descriptionText = value;}
+	}
 
 	public int Index
 	{
@@ -34,6 +41,22 @@ public class Draggable : MonoBehaviour
 	
 	}
 
+	void OnMouseEnter()
+	{
+		if(onBuildingNumber != -1)
+		{
+			descriptionText.GetComponent<MeshRenderer>().enabled = true;
+		}
+	}
+
+	void OnMouseExit()
+	{
+		if(onBuildingNumber != -1)
+		{
+			descriptionText.GetComponent<MeshRenderer>().enabled = false;
+		}
+	}
+
 	void OnMouseDrag()
 	{
 		if(gm.IconsDraggable)
@@ -51,6 +74,8 @@ public class Draggable : MonoBehaviour
 				audioPlayed = true;
 				gm.GetComponents<AudioSource>()[1].Play();
 			}
+
+			descriptionText.GetComponent<MeshRenderer>().enabled = false;
 
 			float distance_to_screen = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
 			Vector3 pos_move = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));

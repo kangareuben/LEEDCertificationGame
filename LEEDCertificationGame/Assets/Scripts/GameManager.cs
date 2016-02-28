@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 	int[] numberOfIconsOfEachType = new int[14];
 
 	public List<GameObject> iconTexts = new List<GameObject>();
+	public List<TextMesh> iconDescriptionTexts = new List<TextMesh>();
 
 	public List<GameObject> buildings = new List<GameObject>();
 
@@ -294,6 +295,15 @@ public class GameManager : MonoBehaviour
 		g.GetComponent<Draggable>().Index = index;
 		g.AddComponent<BoxCollider2D>();
 		g.tag = "Draggable";
+
+		TextMesh t = Object.Instantiate(iconDescriptionTexts[index], g.transform.position, g.transform.rotation) as TextMesh;
+		t.color = new Color(1f, .1f, .1f);
+		Vector3 temp = t.transform.position;
+		temp.z -= .01f;
+		t.transform.position = temp;
+		t.transform.parent = g.transform;
+
+		g.GetComponent<Draggable>().DescriptionText = t;
 		
 		icons.Add(g);
 		
